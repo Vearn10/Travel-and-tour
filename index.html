@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>See and Explore Travel and Tours | Official Site</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@600;800&family=Roboto:wght@400;500&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --brand-orange: #f47c20;
+            --brand-green: #1f6f3f;
+            --brand-blue: #1ba7c9;
+            --dark: #0f172a;
+            --light: #f1f5f9;
+        }
+
+        * {
+            box-sizing: border-box;
+            transition: all 0.25s ease;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            color: var(--dark);
+            background: #fff;
+            padding-bottom: 80px;
+            overflow-x: hidden;
+        }
+
+        /* --- Navigation --- */
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 6%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .logo-img {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            object-fit: cover;
+            border: 2px solid var(--brand-orange);
+        }
+
+        .nav-links button {
+            background: none;
+            border: none;
+            font-family: 'Jost';
+            font-weight: 700;
+            margin-left: 25px;
+            cursor: pointer;
+            color: #475569;
+            font-size: 0.95rem;
+        }
+
+        .nav-links button.active {
+            color: var(--brand-orange);
+        }
+
+        /* --- Sections --- */
+        .section {
+            padding: 40px 6%;
+            display: none;
+            min-height: 80vh;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section.active {
+            display: block;
+            animation: slideUp 0.4s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* --- Hero --- */
+        .hero {
+            background: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.5)),
+                url('https://images.unsplash.com/photo-1530789253388-582c481c54b0?auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            border-radius: 35px;
+            padding: 100px 40px;
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .hero h1 {
+            font-family: 'Jost';
+            font-size: 3rem;
+            margin: 0 0 20px;
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+        }
+
+        /* --- Grid & Components --- */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .promo-card {
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .promo-img {
+            width: 100%;
+            height: 230px;
+            object-fit: cover;
+        }
+
+        .promo-content {
+            padding: 25px;
+            flex-grow: 1;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 8px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .badge-hot {
+            background: #fee2e2;
+            color: #ef4444;
+        }
+
+        .badge-allin {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .btn-action {
+            background: var(--brand-orange);
+            color: white;
+            padding: 16px;
+            border-radius: 15px;
+            border: none;
+            font-weight: 800;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .btn-fb {
+            background: #1877f2;
+            margin-top: 15px;
+        }
+
+        /* --- Bottom Nav --- */
+        .mobile-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            display: none;
+            justify-content: space-around;
+            padding: 15px 0;
+            box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.08);
+            z-index: 2000;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .m-btn {
+            border: none;
+            background: none;
+            color: #94a3b8;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 0.7rem;
+            font-weight: 800;
+            gap: 5px;
+        }
+
+        .m-btn.active {
+            color: var(--brand-orange);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-nav {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .section {
+                padding: 20px 5% 100px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="nav-container">
+        <a href="#" class="brand" onclick="showPage('home')">
+            <img src="logo.jpg" alt="See & Explore" class="logo-img">
+            <div style="line-height: 1.1;">
+                <span style="font-weight: 800; font-size: 1.25rem; font-family: 'Jost';">
+                    <span style="color:var(--brand-orange)">SEE</span> & <span
+                        style="color:var(--brand-blue)">EXPLORE</span>
+                </span><br>
+                <small
+                    style="color: var(--brand-green); font-weight: 700; font-size: 0.65rem; letter-spacing: 1px; text-transform: uppercase;">Travel
+                    and Tours</small>
+            </div>
+        </a>
+        <div class="nav-links">
+            <button onclick="showPage('home')" class="active" id="d-home">Home</button>
+            <button onclick="showPage('promos')" id="d-promos">Promos</button>
+            <button onclick="showPage('visa')" id="d-visa">Visa Services</button>
+            <button onclick="showPage('about')" id="d-about">About</button>
+        </div>
+    </nav>
+
+    <main id="home" class="section active">
+        <div class="hero">
+            <h1>Book Your Next Destination</h1>
+            <p>Your legitimate partner for affordable All-In International Packages and Hassle-Free Visa Assistance.</p>
+            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                <button class="btn-action" style="width: auto; padding: 16px 40px;" onclick="showPage('promos')">View
+                    Promos</button>
+            </div>
+        </div>
+
+        <div class="grid" style="text-align: center;">
+            <div class="promo-content">
+                <i data-lucide="check-circle" color="var(--brand-green)" size="48"></i>
+                <h3>Legit & Accredited</h3>
+                <p>Verified DOT agency with complete BIR & Business Permits for your safety.</p>
+            </div>
+            <div class="promo-content">
+                <i data-lucide="plane" color="var(--brand-blue)" size="48"></i>
+                <h3>All-In Deals</h3>
+                <p>No hidden charges. We include flights, hotels, and tours in one price.</p>
+            </div>
+            <div class="promo-content">
+                <i data-lucide="users" color="var(--brand-orange)" size="48"></i>
+                <h3>Happy Travelers</h3>
+                <p>Thousands of families assisted since our establishment in 2014.</p>
+            </div>
+        </div>
+    </main>
+
+    <main id="promos" class="section">
+        <h2 style="font-family: 'Jost'; text-align: center; font-size: 2rem;">Trending Destinations</h2>
+        <div class="grid">
+            <div class="promo-card">
+                <img src="https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=600"
+                    class="promo-img">
+                <div class="promo-content">
+                    <span class="badge badge-hot">Top Seller</span>
+                    <h3>Vietnam All-In</h3>
+                    <p>Hanoi - Halong Bay 4D3N. Includes Airfare, Hotel, Meals, and Tours.</p>
+                    <button class="btn-action"
+                        onclick="window.open('https://www.facebook.com/messages/t/BookYourNextDestination1')">Inquire
+                        Now</button>
+                </div>
+            </div>
+            <div class="promo-card">
+                <img src="https://images.unsplash.com/photo-1536431311719-398b6704d4cc?auto=format&fit=crop&w=600"
+                    class="promo-img">
+                <div class="promo-content">
+                    <span class="badge badge-allin">Local Gem</span>
+                    <h3>Batanes Special</h3>
+                    <p>Experience the North. Complete land arrangement + flights available.</p>
+                    <button class="btn-action"
+                        onclick="window.open('https://www.facebook.com/messages/t/BookYourNextDestination1')">Inquire
+                        Now</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <main id="visa" class="section">
+        <div
+            style="background: var(--light); padding: 50px; border-radius: 30px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px;">
+            <div>
+                <h2 style="font-family: 'Jost'; color: var(--brand-orange);">Visa Assistance</h2>
+                <p>We boast a high approval rate for Filipino travelers. Our team handles the documentation, appointment
+                    setting, and expert consultation.</p>
+                <ul style="list-style: none; padding: 0; display: grid; gap: 10px; font-weight: 500;">
+                    <li><i data-lucide="check" size="18" color="var(--brand-green)"></i> Japan Single/Multiple Entry
+                    </li>
+                    <li><i data-lucide="check" size="18" color="var(--brand-green)"></i> South Korea (C-3-9)</li>
+                    <li><i data-lucide="check" size="18" color="var(--brand-green)"></i> Australia Tourist Visa</li>
+                    <li><i data-lucide="check" size="18" color="var(--brand-green)"></i> Canada & Schengen Visa</li>
+                </ul>
+            </div>
+            <div
+                style="background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+                <h3>Start Your Application</h3>
+                <p>Message us to get the latest checklist of requirements.</p>
+                <a href="https://www.facebook.com/messages/t/BookYourNextDestination1" target="_blank"
+                    class="btn-action btn-fb">
+                    <i data-lucide="message-circle"></i> Chat with a Visa Expert
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <main id="about" class="section">
+        <h2 style="text-align: center; font-family: 'Jost';">Our Agency</h2>
+        <div style="max-width: 800px; margin: 0 auto; line-height: 1.8;">
+            <p><strong>See and Explore Travel and Tours</strong> is a registered travel agency in the Philippines
+                dedicated to providing "hassle-free" and quality travel services. We specialize in both domestic and
+                international destinations, catering to solo travelers, families, and corporate groups.</p>
+            <div
+                style="background: #f8fafc; padding: 25px; border-left: 5px solid var(--brand-blue); border-radius: 10px; margin: 30px 0;">
+                <p style="margin: 0;"><strong>Office Hours:</strong> Mon - Sat (9:00 AM - 6:00 PM)<br>
+                    <strong>Location:</strong>Unit B, Quidayan Building, Brgy. Masiit, Calauan, Laguna, Calauan,
+                    Philippines, 4012<br>
+                    <strong>Official Page:</strong> @BookYourNextDestination1
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <nav class="mobile-nav">
+        <button class="m-btn active" id="m-home" onclick="showPage('home')"><i data-lucide="home"></i>Home</button>
+        <button class="m-btn" id="m-promos" onclick="showPage('promos')"><i data-lucide="tags"></i>Promos</button>
+        <button class="m-btn" id="m-visa" onclick="showPage('visa')"><i data-lucide="file-text"></i>Visa</button>
+        <button class="m-btn" id="m-about" onclick="showPage('about')"><i data-lucide="help-circle"></i>Info</button>
+    </nav>
+
+    <script>
+        lucide.createIcons();
+
+        function showPage(pageId) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-links button, .m-btn').forEach(b => b.classList.remove('active'));
+
+            document.getElementById(pageId).classList.add('active');
+            if (document.getElementById('d-' + pageId)) document.getElementById('d-' + pageId).classList.add('active');
+            if (document.getElementById('m-' + pageId)) document.getElementById('m-' + pageId).classList.add('active');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+
+</html>
