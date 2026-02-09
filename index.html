@@ -552,30 +552,41 @@
             });
         }
 
-        function openMessenger() {
+        async function openMessenger() {
             const pageID = "101569424911739";
-            const pageUsername = "BookYourNextDestination1"; // Keeping this as a secondary fallback
-
             const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Kindle|Silk|Mobile|Tablet/i.test(navigator.userAgent);
 
-            if (isMobile) {
-                // Method A: The deepest link possible for the Messenger App
-                const deepLink = "fb-messenger://user-thread/" + pageID;
-                // Method B: The universal web link
-                const universalLink = "https://m.me/" + pageID;
+            try {
+                // 1. Fetch the user's country based on their IP (Free & Fast API)
+                const response = await fetch('https://api.country.is/');
+                const data = await response.json();
 
-                // Try the deep link first
-                window.location.href = deepLink;
+                // 2. Check if the country is NOT Philippines (PH)
+                if (data.country !== 'PH') {
+                    alert("We're sorry, this service is only available for travelers in the Philippines.");
+                    return; // Stop the function here
+                }
 
-                // If the app doesn't open within 800ms, redirect to the universal link
-                setTimeout(function () {
-                    if (!document.hidden) {
-                        window.location.href = universalLink;
-                    }
-                }, 800);
-            } else {
-                // Desktop version
-                window.open("https://www.facebook.com/messages/t/" + pageID, '_blank');
+                // 3. If they ARE in PH, proceed with existing logic
+                if (isMobile) {
+                    const deepLink = "fb-messenger://user-thread/" + pageID;
+                    const universalLink = "https://m.me/" + pageID;
+
+                    window.location.href = deepLink;
+
+                    setTimeout(function () {
+                        if (!document.hidden) {
+                            window.location.href = universalLink;
+                        }
+                    }, 800);
+                } else {
+                    window.open("https://www.facebook.com/messages/t/" + pageID, '_blank');
+                }
+
+            } catch (error) {
+                // Fallback: If the API fails, we usually allow the link to work anyway
+                console.error("Geo-restriction check failed, proceeding anyway.");
+                window.location.href = "https://m.me/" + pageID;
             }
         }
     </script>
