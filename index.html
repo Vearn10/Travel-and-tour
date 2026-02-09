@@ -553,43 +553,43 @@
         }
 
         async function openMessenger() {
-            const pageID = "101569424911739";
-            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Kindle|Silk|Mobile|Tablet/i.test(navigator.userAgent);
-
-            try {
-                // 1. Fetch the user's country based on their IP (Free & Fast API)
-                const response = await fetch('https://api.country.is/');
-                const data = await response.json();
-
-                // 2. Check if the country is NOT Philippines (PH)
-                if (data.country !== 'PH') {
-                    alert("We're sorry, this service is only available for travelers in the Philippines.");
-                    return; // Stop the function here
-                }
-
-                // 3. If they ARE in PH, proceed with existing logic
-                if (isMobile) {
-                    const deepLink = "fb-messenger://user-thread/" + pageID;
-                    const universalLink = "https://m.me/" + pageID;
-
-                    window.location.href = deepLink;
-
-                    setTimeout(function () {
-                        if (!document.hidden) {
-                            window.location.href = universalLink;
-                        }
-                    }, 800);
-                } else {
-                    window.open("https://www.facebook.com/messages/t/" + pageID, '_blank');
-                }
-
-            } catch (error) {
-                // Fallback: If the API fails, we usually allow the link to work anyway
-                console.error("Geo-restriction check failed, proceeding anyway.");
-                window.location.href = "https://m.me/" + pageID;
-            }
+    const pageID = "101569424911739";
+    
+    // PH-Region restriction check
+    try {
+        const response = await fetch('https://api.country.is/');
+        const data = await response.json();
+        if (data.country !== 'PH') {
+            alert("This service is available for travelers within the Philippines.");
+            return;
         }
+    } catch (e) { console.log("Geo-check skipped"); }
+
+    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+    if (isMobile) {
+        // This is the "Bypass" - it forces the OS to open the app thread directly
+        // We use the ID because it's faster than name-resolution encryption
+        const appThread = "fb-messenger://user-thread/" + pageID;
+        const webFallback = "https://m.me/" + pageID;
+
+        // 1. Attempt to open the app directly
+        window.location.href = appThread;
+
+        // 2. If the user doesn't have the app, the screen won't change. 
+        // We redirect them to the web link after a short delay.
+        setTimeout(() => {
+            if (!document.hidden) {
+                window.location.href = webFallback;
+            }
+        }, 1000);
+    } else {
+        // Desktop version
+        window.open("https://www.facebook.com/messages/t/" + pageID, '_blank');
+    }
+}
     </script>
 </body>
 
 </html>
+
