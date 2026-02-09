@@ -553,24 +553,32 @@
         }
 
         function openMessenger() {
-    // Numeric ID is the most stable way to link to a Page
-    const pageID = "101569424911739";
-    
-    // Updated robust mobile detection
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Kindle|Silk|Mobile|Tablet/i.test(navigator.userAgent);
+            const pageID = "101569424911739";
 
-    if (isMobile) {
-        // This is the most compatible universal link format for mobile
-        // It will automatically ask to open the app or use the browser
-        window.location.href = "https://m.me/" + pageID;
-    } else {
-        // Desktop: Open the specific message thread in a new tab
-        window.open("https://www.facebook.com/messages/t/" + pageID, '_blank');
-    }
-}
+            // Robust mobile detection (Expanded)
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Kindle|Silk|Mobile|Tablet/i.test(navigator.userAgent);
+
+            if (isMobile) {
+                /* Using fb-messenger://user-thread/ directly is the fastest 
+                   way to jump straight into the message thread on mobile apps.
+                */
+                const appUrl = "fb-messenger://user-thread/" + pageID;
+                const fallbackUrl = "https://m.me/" + pageID;
+
+                window.location.href = appUrl;
+
+                // Fallback to browser if the app isn't installed
+                setTimeout(function () {
+                    if (!document.hidden) {
+                        window.location.href = fallbackUrl;
+                    }
+                }, 1000);
+            } else {
+                // Desktop: Jump straight to the "Compose" screen for that ID
+                window.open("https://www.facebook.com/messages/t/" + pageID, '_blank');
+            }
+        }
     </script>
 </body>
 
 </html>
-
-
