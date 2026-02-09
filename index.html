@@ -525,26 +525,22 @@
             });
         }
 
-        // --- NEW MESSENGER REDIRECT LOGIC ---
         function openMessenger() {
-            const pageID = "BookYourNextDestination1"; // Your Page Username or ID
-            const fbUrl = "https://m.me/" + pageID;
-            const messengerAppUrl = "fb-messenger://user/" + pageID;
+            // The username from your URL: facebook.com/BookYourNextDestination1
+            const pageUsername = "BookYourNextDestination1";
 
-            // Simple Mobile Detection
+            // This is the universal link that triggers the app automatically on mobile
+            const universalLink = "https://m.me/" + pageUsername;
+
+            // Detection
             const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
             if (isMobile) {
-                // Try to open the app
-                window.location.href = messengerAppUrl;
-
-                // Fallback: If the app isn't installed, open the browser version after a short delay
-                setTimeout(function () {
-                    window.location.href = fbUrl;
-                }, 500);
+                // On mobile, we location.replace so it doesn't create an extra "back button" step
+                window.location.assign(universalLink);
             } else {
-                // Desktop: Open in new tab
-                window.open(fbUrl, '_blank');
+                // On desktop, open in a new tab
+                window.open(universalLink, '_blank');
             }
         }
     </script>
