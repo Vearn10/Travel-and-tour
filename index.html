@@ -553,33 +553,24 @@
         }
 
         function openMessenger() {
-            // We use the Numeric ID because usernames often cause "User not found" on mobile apps
-            const pageID = "101569424911739";
-            const pageUsername = "BookYourNextDestination1";
+    // Numeric ID is the most stable way to link to a Page
+    const pageID = "101569424911739";
+    
+    // Updated robust mobile detection
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Kindle|Silk|Mobile|Tablet/i.test(navigator.userAgent);
 
-            // URLs
-            const messengerAppUrl = "fb-messenger://user-thread/" + pageID;
-            const universalLink = "https://m.me/" + pageUsername;
-
-            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Kindle|Silk|Mobile|Tablet/i.test(navigator.userAgent);
-
-            if (isMobile) {
-                // This attempts to trigger the Messenger app directly to the chat thread
-                window.location.href = messengerAppUrl;
-
-                // Fallback: If they don't have the app or it fails, open the universal link after 500ms
-                setTimeout(function () {
-                    if (!document.hidden) {
-                        window.location.href = universalLink;
-                    }
-                }, 500);
-            } else {
-                // Desktop: Open the official messages link
-                window.open("https://www.facebook.com/messages/t/" + pageID, '_blank');
-            }
-        }
+    if (isMobile) {
+        // This is the most compatible universal link format for mobile
+        // It will automatically ask to open the app or use the browser
+        window.location.href = "https://m.me/" + pageID;
+    } else {
+        // Desktop: Open the specific message thread in a new tab
+        window.open("https://www.facebook.com/messages/t/" + pageID, '_blank');
+    }
+}
     </script>
 </body>
 
 </html>
+
 
