@@ -554,27 +554,27 @@
 
         function openMessenger() {
             const pageID = "101569424911739";
+            const pageUsername = "BookYourNextDestination1"; // Keeping this as a secondary fallback
 
-            // Robust mobile detection (Expanded)
             const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Kindle|Silk|Mobile|Tablet/i.test(navigator.userAgent);
 
             if (isMobile) {
-                /* Using fb-messenger://user-thread/ directly is the fastest 
-                   way to jump straight into the message thread on mobile apps.
-                */
-                const appUrl = "fb-messenger://user-thread/" + pageID;
-                const fallbackUrl = "https://m.me/" + pageID;
+                // Method A: The deepest link possible for the Messenger App
+                const deepLink = "fb-messenger://user-thread/" + pageID;
+                // Method B: The universal web link
+                const universalLink = "https://m.me/" + pageID;
 
-                window.location.href = appUrl;
+                // Try the deep link first
+                window.location.href = deepLink;
 
-                // Fallback to browser if the app isn't installed
+                // If the app doesn't open within 800ms, redirect to the universal link
                 setTimeout(function () {
                     if (!document.hidden) {
-                        window.location.href = fallbackUrl;
+                        window.location.href = universalLink;
                     }
-                }, 1000);
+                }, 800);
             } else {
-                // Desktop: Jump straight to the "Compose" screen for that ID
+                // Desktop version
                 window.open("https://www.facebook.com/messages/t/" + pageID, '_blank');
             }
         }
