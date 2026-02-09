@@ -450,20 +450,23 @@
 
     <main id="contact" class="section">
         <div
-            style="max-width: 600px; margin: 0 auto; background: var(--light); padding: 40px; border-radius: 30px; text-align: center;">
-            <h2 style="font-family: 'Jost';">Ready to Travel?</h2>
-            <p>Message us directly on Facebook for the fastest response.</p>
+            style="max-width: 600px; margin: 0 auto; background: var(--light); padding: 40px; border-radius: 30px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+            <h2 style="font-family: 'Jost'; color: var(--dark);">Ready to Travel?</h2>
+            <p style="color: #64748b;">Message us directly on Facebook for the fastest response.</p>
 
-            <button onclick="openMessenger()" class="btn-main btn-fb"
-                style="padding: 18px; font-size: 1.1rem; margin-top: 20px; width: 100%; border: none;">
+            <button onclick="openMessenger()" class="btn-main btn-fb btn-fb-animate"
+                style="padding: 18px; font-size: 1.1rem; margin-top: 20px; width: 100%; border: none; display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer;">
                 <i data-lucide="message-circle"></i> Chat via Messenger
             </button>
 
             <div
-                style="margin-top: 40px; text-align: left; border-top: 1px solid #ddd; padding-top: 20px; color: #64748b;">
-                <p><strong>Hotline:</strong> 09XX XXX XXXX</p>
-                <p><strong>Email:</strong> seeandexploretours@gmail.com</p>
-                <p><strong>Location:</strong> Manila, Philippines</p>
+                style="margin-top: 40px; text-align: left; border-top: 1px solid #ddd; padding-top: 20px; color: #64748b; font-size: 0.9rem;">
+                <p style="display: flex; align-items: center; gap: 10px;"><i data-lucide="phone" size="16"></i>
+                    <strong>Hotline:</strong> 0965 405 2730</p>
+                <p style="display: flex; align-items: center; gap: 10px;"><i data-lucide="mail" size="16"></i>
+                    <strong>Email:</strong> seeandexploretours@gmail.com</p>
+                <p style="display: flex; align-items: center; gap: 10px;"><i data-lucide="map-pin" size="16"></i>
+                    <strong>Location:</strong> Calauan, Laguna, Philippines</p>
             </div>
         </div>
     </main>
